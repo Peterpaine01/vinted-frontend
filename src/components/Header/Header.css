@@ -1,0 +1,12 @@
+/* -------- HEADER --------- */
+
+header {
+  border-bottom: 1px solid grey;
+}
+
+.top-menu .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+}
