@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Fil = ({ offer, index }) => {
+const Fil = ({ offer }) => {
   const {
     _id,
     product_name,
@@ -12,17 +12,20 @@ const Fil = ({ offer, index }) => {
     product_image,
     product_pictures,
   } = offer;
-  console.log(product_details[0].MARQUE);
+  console.log(owner.account.avatar);
 
   return (
     <Link to={`/offer/${_id}`}>
       <article className="product">
         <div className="author">
-          <img src={owner.account.avatar.url} alt="" />
+          {owner.account.avatar ? (
+            <img src={owner.account.avatar.secure_url} alt="" />
+          ) : null}
+
           <p>{owner.account.username}</p>
         </div>
         <div className="product-preview">
-          <img src={product_image.url} alt="" />
+          <img src={product_image.secure_url} alt="" />
         </div>
         <p className="price">{product_price} €</p>
         <p className="size">{product_details[1].TAILLE}</p>
