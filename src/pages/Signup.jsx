@@ -1,68 +1,66 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import Cookies from "js-cookie";
+import { Link, useNavigate } from "react-router-dom";
 
-// Import composants
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-
-const Signup = () => {
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+// Je récupère la fonction handleToken en argument
+const Signup = ({ handleToken }) => {
+  // States qui gèrent mes inputs
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [newsletter, setNewsletter] = useState(false);
 
-  Cookies.set("nomDuCookie", "valeurDuCookie");
+  //   State qui gère les messages d'erreur
+  const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          `https://lereacteur-vinted-api.herokuapp.com/user/signup`
+  //   Permet de naviguer au click après avoir exécuté du code
+  const navigate = useNavigate();
+
+  // Fonction qui sera appelée lors de la validation du formulaire
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      //   Je fais disparaitre un éventuel message d'erreur
+      setErrorMessage("");
+      //   Requête axios :
+      // - Premier argument : l'url que j'interroge
+      // - deuxième : le body que j'envoi
+      const response = await axios.post(
+        "https://lereacteur-vinted-api.herokuapp.com/user/signup",
+        {
+          email, // email : email
+          username,
+          password,
+          newsletter,
+        }
+      );
+      // J'enregistre le token dans mon state et mes cookies
+      handleToken(response.data.token);
+      // Je navigue vers ma page /
+      navigate("/");
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response.status);
+      // console.log(error.message);
+      if (error.response.data.message === "Missing parameters") {
+        // Je met à jour mon state errorMessage
+        setErrorMessage("Merci de remplir tous les champs");
+      } else if (error.response.status === 409) {
+        setErrorMessage(
+          "Cette adresse mail est déjà utilisée pour un compte, merci d'en utiliser une autre :)"
         );
-        // console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.response.data);
       }
-    };
-    fetchData();
-  }, []);
-
-  const handleChange = (event) => {
-    if (event === "email") {
-      setEmail(event.target.value);
-    } else if (event === "username") {
-      setUsername(event.target.value);
-    } else if (event === "password") {
-      setPassword(event.target.value);
-      if (password !== "" && password.length >= 8) {
-        setShowError(false);
-      } else {
-        console.log("password is empty");
-        setShowError(true);
-      }
-    } else if (event === "newsletter") {
-      setNewsletter(event.target.value);
     }
   };
 
-  return isLoading ? (
-    <p>Loading ...</p>
-  ) : (
+  return (
     <>
-      <Header />
       <main>
         <div className="container">
           <section className="signup-form">
             <h1>S'inscrire</h1>
             <form onSubmit={handleSubmit}>
               <div>
-                <span>Name</span>
                 <input
                   type="text"
                   placeholder="Nom d'utilisateur"
@@ -78,37 +76,39 @@ const Signup = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  onChange={() => {
-                    handleChange("email");
+                  onChange={(event) => {
+                    setEmail(event.target.value);
                   }}
                   value={email}
                 />
               </div>
               <div>
-                {/* {showError === true ? (
-                  <p className="showed">
-                    Votre mot de passe doit faire plus de 8 caractères.
-                  </p>
-                ) : (
-                  <p className="hidden">
-                    Votre mot de passe doit faire plus de 8 caractères.
-                  </p>
-                )} */}
                 <input
                   type="password"
                   placeholder="Mot de passe"
                   name="password"
                   onChange={(event) => {
                     setPassword(event.target.value);
-                    if (password !== "" && password.length >= 8) {
-                      setShowError(false);
-                    } else {
-                      console.log("password is empty");
-                      setShowError(true);
-                    }
                   }}
                   value={password}
                 />
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="newsletter"
+                  onChange={() => {
+                    if (newsletter === true) {
+                      setNewsletter(!newsletter);
+                    }
+                  }}
+                  value={newsletter}
+                />
+                <span>S'inscrire à notre newsletter</span>
+              </div>
+              <div>
+                <p>En m'inscrivant, blablabla</p>
               </div>
 
               <div>
@@ -117,12 +117,14 @@ const Signup = () => {
                   type="submit"
                   value="S'inscrire"
                 ></input>
+                {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
               </div>
             </form>
+            <span>Tu as déjà un compte ? </span>
+            <Link to="/login">Connecte-toi !</Link>
           </section>
         </div>
       </main>
-      <Footer />
     </>
   );
 };

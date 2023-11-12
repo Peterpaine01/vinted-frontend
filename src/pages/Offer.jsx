@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-// Import composants
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
-
 const Offer = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -30,13 +26,10 @@ const Offer = () => {
     fetchData();
   }, []);
 
-  console.log(data.owner.account.avatar);
-
   return isLoading ? (
     <p>Loading ...</p>
   ) : (
     <>
-      <Header />
       <main>
         <div className="container">
           <section className="details-offer">
@@ -73,7 +66,6 @@ const Offer = () => {
           </section>
         </div>
       </main>
-      <Footer />
     </>
   );
 };

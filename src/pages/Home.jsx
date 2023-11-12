@@ -3,11 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 // Import composants
-import Fil from "../components/Fil/Fil";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Fil from "../components/Fil";
 
-const Home = () => {
+const Home = ({ search }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -15,9 +13,10 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          " https://lereacteur-vinted-api.herokuapp.com/offers"
+          `https://lereacteur-vinted-api.herokuapp.com/offers${search}`
         );
-        console.log(response.data);
+        // console.log(response.data);
+        console.log(search);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -25,13 +24,12 @@ const Home = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [search]);
 
   return isLoading ? (
     <span>En cours de chargement...</span>
   ) : (
     <>
-      <Header />
       <main>
         <div className="slider">
           <div className="container">
@@ -45,15 +43,16 @@ const Home = () => {
           <div className="container">
             <section>
               <h2>Fil d'actu</h2>
-              {data.offers.map((offer, index) => {
-                // console.log(offer.owner.account.avatar.secure_url);
-                return <Fil key={offer._id} index={index} offer={offer} />;
-              })}
+              <div className="list-offer">
+                {data.offers.map((offer, index) => {
+                  // console.log(offer.owner.account.avatar.secure_url);
+                  return <Fil key={offer._id} index={index} offer={offer} />;
+                })}
+              </div>
             </section>
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 };

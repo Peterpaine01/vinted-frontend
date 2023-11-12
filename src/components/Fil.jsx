@@ -12,11 +12,11 @@ const Fil = ({ offer }) => {
     product_image,
     product_pictures,
   } = offer;
-  console.log(owner.account.avatar);
+  //   console.log(owner.account.avatar);
 
   return (
-    <Link to={`/offer/${_id}`}>
-      <article className="product">
+    <Link className="product" to={`/offer/${_id}`}>
+      <article>
         <div className="author">
           {owner.account.avatar ? (
             <img src={owner.account.avatar.secure_url} alt="" />
