@@ -13,10 +13,10 @@ const Home = ({ search }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://lereacteur-vinted-api.herokuapp.com/offers${search}`
+          `https://lereacteur-vinted-api.herokuapp.com/offers?title=${search.title}&sort=${search.sort}&priceMin=${search.priceRange[0]}&priceMax=${search.priceRange[1]}`
         );
-        // console.log(response.data);
-        console.log(search);
+        console.log(response.data);
+        // console.log(search);
         setData(response.data);
         setIsLoading(false);
       } catch (error) {

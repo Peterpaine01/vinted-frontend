@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Publish from "./pages/Publish";
 
 // Components
 import Header from "./components/Header";
@@ -21,11 +22,11 @@ const App = () => {
     Cookies.get("token") || null
     // Cookies.get("token") ? Cookies.get("token") : null
   );
-  const [searchReq, setSearchReq] = useState(
-    { sort: "price-asc" },
-    { priceMin: 10 }
-  );
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState({
+    sort: "",
+    priceRange: [0, 50],
+    title: "",
+  });
 
   // Cette fonction permet de stocker le token dans le state et dans les cookies ou supprimer le token dans le state et dans les cookies
   const handleToken = (token) => {
@@ -38,41 +39,36 @@ const App = () => {
     }
   };
 
-  let newSearch = "?";
-  const keysTab = Object.keys(searchReq);
-  const ValuesTab = Object.values(searchReq);
-  for (let i = 0; i < keysTab.length; i++) {
-    if (i > 0) {
-      newSearch = newSearch + "&";
-    }
-    newSearch = newSearch + `${keysTab[i]}=${ValuesTab[i]}`;
-  }
+  const handleChangeRange = (values) => {
+    // console.log(values);
+    setSearch({
+      ...search,
+      priceRange: [values[0], values[1]],
+    });
+  };
 
   const handleChange = (event) => {
-    const value = event.target.value;
-
     if (event.target.name === "sort") {
-      if (searchReq.sort === "price-asc" || searchReq.sort === "") {
-        setSearchReq({
-          ...searchReq,
+      if (search.sort === "price-asc" || search.sort === "") {
+        setSearch({
+          ...search,
           [event.target.name]: "price-desc",
         });
-        console.log(searchReq);
-        setSearch(newSearch);
+        // console.log(search);
       } else {
-        setSearchReq({
-          ...searchReq,
+        setSearch({
+          ...search,
           [event.target.name]: "price-asc",
         });
-        console.log(searchReq);
-        setSearch(newSearch);
+        // console.log(search);
       }
-    } else {
-      setSearchReq({
-        ...searchReq,
+    } else if (event && event.target.name === "title") {
+      const value = event.target.value;
+      setSearch({
+        ...search,
         [event.target.name]: value,
       });
-      console.log(searchReq);
+      // console.log(search);
     }
   };
 
@@ -80,8 +76,10 @@ const App = () => {
     event.preventDefault();
 
     try {
-      console.log(newSearch);
-      setSearch(newSearch);
+      setSearch({
+        ...search,
+      });
+      // console.log(search);
     } catch (error) {
       console.log(error.response); // contrairement au error.message d'express
     }
@@ -94,8 +92,10 @@ const App = () => {
         handleToken={handleToken}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        searchReq={searchReq}
-        setSearchReq={setSearchReq}
+        search={search}
+        values={search.priceRange}
+        setSearch={setSearch}
+        handleChangeRange={handleChangeRange}
       />
       <Routes>
         <Route path="/" element={<Home search={search} />} />
@@ -107,6 +107,10 @@ const App = () => {
         <Route
           path="/login"
           element={<Login token={token} handleToken={handleToken} />}
+        />
+        <Route
+          path="/publish"
+          element={<Publish token={token} handleToken={handleToken} />}
         />
       </Routes>
       <Footer />

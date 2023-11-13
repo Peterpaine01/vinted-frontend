@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Range, getTrackBackground } from "react-range";
-import { useState } from "react";
 
 // Je récupère en props le state token et la fonction handleToken
 const Header = ({
@@ -9,9 +8,12 @@ const Header = ({
   handleSubmit,
   handleChange,
   searchReq,
+  setSearchReq,
+  search,
+  values,
+  setSearch,
+  handleChangeRange,
 }) => {
-  const [values, setValues] = useState([10, 50]);
-
   return (
     <>
       <header>
@@ -28,7 +30,7 @@ const Header = ({
                   id=""
                   placeholder="Rechercher des articles"
                   onChange={handleChange}
-                  value={searchReq.title}
+                  value={search.title}
                 />
               </form>
             </div>
@@ -51,7 +53,7 @@ const Header = ({
                 </>
               )}
 
-              <Link to={`/vendre`}>Vends tes articles</Link>
+              <Link to={`/publish`}>Vends tes articles</Link>
             </nav>
           </div>
         </div>
@@ -66,22 +68,19 @@ const Header = ({
                 id=""
                 placeholder="Rechercher des articles"
                 onChange={handleChange}
-                value={searchReq.sort}
+                value={search.sort}
               />
             </div>
             <div className="range-filter">
               <span>Prix entre :</span>
-              <input type="text" name="" id="" />
-              <input type="text" name="" id="" />
 
               <Range
                 values={values}
-                step={1}
+                step={5}
                 min={0}
                 max={500}
                 onChange={(values) => {
-                  console.log(values);
-                  setValues(values);
+                  handleChangeRange(values);
                 }}
                 renderTrack={({ props, children }) => (
                   // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -129,14 +128,15 @@ const Header = ({
                       boxShadow: "0px 2px 6px #AAA",
                     }}
                   >
-                    {values[index]}
                     <div
                       style={{
                         height: "16px",
                         width: "5px",
                         backgroundColor: isDragged ? "#548BF4" : "#CCC",
                       }}
-                    />
+                    >
+                      {values[index]}
+                    </div>
                   </div>
                 )}
               />
