@@ -3,6 +3,7 @@ import { Range, getTrackBackground } from "react-range";
 
 // Je récupère en props le state token et la fonction handleToken
 const Header = ({
+  logo,
   token,
   handleToken,
   handleSubmit,
@@ -21,7 +22,7 @@ const Header = ({
         <div className="top-menu">
           <div className="container">
             <Link className="logo" to="/">
-              <img src="../src/assets/img/vinted.png" alt="" />
+              <img src={logo} alt="" />
             </Link>
 
             <div className="search-offer">

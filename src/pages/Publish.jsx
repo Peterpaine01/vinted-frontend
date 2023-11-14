@@ -69,8 +69,14 @@ const Publish = ({ token }) => {
             <h1>Vends ton article</h1>
             <form onSubmit={handleSubmit}>
               <div className="white-block">
+                <label className="add-img" htmlFor="picture-input">
+                  <button className="btn-solid btn-large">
+                    Ajouter une image
+                  </button>
+                </label>
                 <input
                   type="file"
+                  id="picture-input"
                   onChange={(event) => {
                     // console.log(event);
                     setPicture(event.target.files[0]);

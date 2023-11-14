@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// images
+import defaultAvatar from "../assets/img/avatar-default.jpg";
+
 // Import composants
 import Fil from "../components/Fil";
 
-const Home = ({ search }) => {
+const Home = ({ tear, search }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,10 +46,7 @@ const Home = ({ search }) => {
                 Vends maintenant
               </Link>
             </div>
-            <img
-              src="../src/assets/img/tear.884480420945b3afd77b44a6c5f98567.svg"
-              alt=""
-            />
+            <img src={tear} alt="" />
           </div>
         </div>
         <div className="sections">
@@ -56,16 +56,20 @@ const Home = ({ search }) => {
               <div className="list-offer">
                 {data.offers.map((offer, index) => {
                   // console.log(offer.owner.account.avatar.secure_url);
-                  return <Fil key={offer._id} index={index} offer={offer} />;
+                  return (
+                    <Fil
+                      key={offer._id}
+                      index={index}
+                      offer={offer}
+                      defaultAvatar={defaultAvatar}
+                    />
+                  );
                 })}
               </div>
             </section>
           </div>
         </div>
-        <img
-          src="../src/assets/img/tear.884480420945b3afd77b44a6c5f98567.svg"
-          alt=""
-        />
+        <img src={tear} alt="" />
       </main>
     </>
   );

@@ -26,10 +26,9 @@ const CheckoutForm = ({ title, price, token, idUser }) => {
         name: `${idUser}`, // J'envoie un identifiant de celui qui paye pour savoir qui est à l'origine de la transaction
       });
 
-      //   console.log(stripeResponse);
+      console.log(stripeResponse);
 
       const stripeToken = stripeResponse.token.id;
-      console.log(title);
 
       //   Je fais une requête à mon back et je lui envoie mon stripeToken
 

@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
 
+// images
+import logo from "./assets/img/vinted.png";
+import tear from "./assets/img/tear.884480420945b3afd77b44a6c5f98567.svg";
+
 // Pages
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
@@ -97,6 +101,7 @@ const App = () => {
   return (
     <Router>
       <Header
+        logo={logo}
         token={token}
         idUser={idUser}
         handleToken={handleToken}
@@ -108,7 +113,7 @@ const App = () => {
         handleChangeRange={handleChangeRange}
       />
       <Routes>
-        <Route path="/" element={<Home search={search} />} />
+        <Route path="/" element={<Home tear={tear} search={search} />} />
         <Route path="/offer/:id" element={<Offer />} />
         <Route
           path="/signup"

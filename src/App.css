@@ -14,7 +14,8 @@ body {
 }
 
 body p,
-body span {
+body span,
+body label {
   font-family: var(--font-main);
   font-size: 16px;
 }
@@ -555,10 +556,6 @@ main.main-grey {
 
 /* PUBLISH */
 
-.offer-form {
-  padding-top: 80px;
-}
-
 .offer-form .white-block {
   padding: 0;
 }
@@ -577,6 +574,18 @@ main.main-grey {
 
 .offer-form .white-block > div p {
   width: 50%;
+}
+
+#picture-input {
+  display: none;
+}
+
+.add-img {
+  display: flex;
+  margin: 24px;
+}
+
+.add-img .btn-large {
 }
 
 .offer-form .white-block .text-input {

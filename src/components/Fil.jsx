@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Fil = ({ offer }) => {
+const Fil = ({ offer, defaultAvatar }) => {
   const {
     _id,
     product_name,
@@ -20,10 +20,7 @@ const Fil = ({ offer }) => {
         {owner.account.avatar ? (
           <img src={owner.account.avatar.secure_url} alt="" />
         ) : (
-          <img
-            src="../src/assets/img/avatar-default.jpg"
-            alt="v du logo vinted"
-          />
+          <img src={defaultAvatar} alt="v du logo vinted" />
         )}
 
         <p>{owner.account.username}</p>

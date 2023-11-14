@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
+// image
+import defaultAvatar from "../assets/img/avatar-default.jpg";
+
 const Offer = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -100,10 +103,7 @@ const Offer = () => {
                 {data.owner.account.avatar ? (
                   <img src={data.owner.account.avatar.secure_url} alt="" />
                 ) : (
-                  <img
-                    src="../src/assets/img/avatar-default.jpg"
-                    alt="v du logo vinted"
-                  />
+                  <img src={defaultAvatar} alt="v du logo vinted" />
                 )}
 
                 <p>{data.owner.account.username}</p>
