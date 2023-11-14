@@ -29,17 +29,19 @@ const CheckoutForm = ({ title, price, token, idUser }) => {
       //   console.log(stripeResponse);
 
       const stripeToken = stripeResponse.token.id;
-      console.log(stripeToken);
+      console.log(title);
 
       //   Je fais une requête à mon back et je lui envoie mon stripeToken
 
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/payment",
         {
-          stripeToken: stripeToken,
+          token: stripeToken,
+          title: title,
+          amount: price,
         }
       );
-      console.log(response.data);
+      console.log(response);
       //   Si la réponse contient succeeded, je fais apparaitre "payment validé"
       if (response.data.status === "succeeded") {
         setSucceeded(true);

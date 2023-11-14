@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 
 const stripePromise = loadStripe(
-  "pk_test_51OCOITCauQZ88jZkZuo2BQub4gjLjmwsI50JzgXdi2QfDGDOqXxXZYxRz5nPBsdcAqMqJRqjmWgIV83fK3mCK1Ti00pr4ri026"
+  "pk_test_51IpvphDqQKb3lCIT3UU1fIPnAXyyG57gLns831kNwLVGCFo1a3MtSucuiIwEijgip8fL85zUlKZKTK0a2JAhSWHt00ZWSjTErF"
 );
 
 const Payment = ({ token, idUser, handleToken }) => {
@@ -15,7 +15,6 @@ const Payment = ({ token, idUser, handleToken }) => {
   return token ? (
     <>
       <main>
-        {/* <p>{title}</p> */}
         <div className="container">
           <Elements stripe={stripePromise}>
             <CheckoutForm
