@@ -1,9 +1,9 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const CheckoutForm = ({ title, price, token }) => {
+const CheckoutForm = ({ title, price, token, idUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
   // Va nous permettre de faire une requête à Stripe pour lui envoyer les codes
@@ -12,20 +12,7 @@ const CheckoutForm = ({ title, price, token }) => {
   //   Pour récupérer le contenu de CardElement
   const elements = useElements();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://lereacteur-vinted-api.herokuapp.com/user/${token}`
-        );
-        console.log(response.data);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
-
-    fetchData();
-  }, []);
+  console.log(idUser);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,12 +23,13 @@ const CheckoutForm = ({ title, price, token }) => {
 
       //   J'envoie ces informations à stripe pour qu'il valide l'existence de la carte
       const stripeResponse = await stripe.createToken(cardElement, {
-        name: "L'id de l'utilisateur", // J'envoie un identifiant de celui qui paye pour savoir qui est à l'origine de la transaction
+        name: `${idUser}`, // J'envoie un identifiant de celui qui paye pour savoir qui est à l'origine de la transaction
       });
 
-      console.log(stripeResponse);
+      //   console.log(stripeResponse);
 
       const stripeToken = stripeResponse.token.id;
+      console.log(stripeToken);
 
       //   Je fais une requête à mon back et je lui envoie mon stripeToken
 

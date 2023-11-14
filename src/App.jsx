@@ -23,6 +23,10 @@ const App = () => {
     Cookies.get("token") || null
     // Cookies.get("token") ? Cookies.get("token") : null
   );
+  const [idUser, setIdUser] = useState(
+    Cookies.get("idUser") || null
+    // Cookies.get("token") ? Cookies.get("token") : null
+  );
   const [search, setSearch] = useState({
     sort: "",
     priceRange: [0, 50],
@@ -30,13 +34,17 @@ const App = () => {
   });
 
   // Cette fonction permet de stocker le token dans le state et dans les cookies ou supprimer le token dans le state et dans les cookies
-  const handleToken = (token) => {
+  const handleToken = (token, idUser) => {
     if (token) {
       Cookies.set("token", token, { expires: 15 });
+      Cookies.set("idUser", idUser, { expires: 15 });
       setToken(token);
+      setIdUser(idUser);
     } else {
       Cookies.remove("token");
+      Cookies.remove("idUser");
       setToken(null);
+      setIdUser(null);
     }
   };
 
@@ -90,6 +98,7 @@ const App = () => {
     <Router>
       <Header
         token={token}
+        idUser={idUser}
         handleToken={handleToken}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
@@ -103,19 +112,27 @@ const App = () => {
         <Route path="/offer/:id" element={<Offer />} />
         <Route
           path="/signup"
-          element={<Signup token={token} handleToken={handleToken} />}
+          element={
+            <Signup token={token} idUser={idUser} handleToken={handleToken} />
+          }
         />
         <Route
           path="/login"
-          element={<Login token={token} handleToken={handleToken} />}
+          element={
+            <Login token={token} idUser={idUser} handleToken={handleToken} />
+          }
         />
         <Route
           path="/publish"
-          element={<Publish token={token} handleToken={handleToken} />}
+          element={
+            <Publish token={token} idUser={idUser} handleToken={handleToken} />
+          }
         />
         <Route
           path="/payment"
-          element={<Payment token={token} handleToken={handleToken} />}
+          element={
+            <Payment token={token} idUser={idUser} handleToken={handleToken} />
+          }
         />
       </Routes>
       <Footer />

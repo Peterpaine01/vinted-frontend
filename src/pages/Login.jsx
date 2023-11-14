@@ -33,8 +33,8 @@ const Login = ({ handleToken }) => {
         userData
       );
       console.log(response.data);
-      handleToken(response.data.token);
-      // Cookies.set("token", token, { expires: 15 });
+      handleToken(response.data.token, response.data._id);
+      // Cookies.set("id", id, { expires: 15 });
 
       navigate("/");
     } catch (error) {
