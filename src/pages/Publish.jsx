@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 const Publish = ({ token }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
   const [city, setCity] = useState("");
@@ -56,6 +56,7 @@ const Publish = ({ token }) => {
       console.log(response.data);
       navigate(`/offer/${response.data._id}`);
       setPictureFromCloudinary(response.data.secure_url);
+      console.log(pictureFromCloudinary);
     } catch (error) {
       //   console.log(error.response);
     }
@@ -68,21 +69,53 @@ const Publish = ({ token }) => {
           <section className="offer-form">
             <h1>Vends ton article</h1>
             <form onSubmit={handleSubmit}>
-              <div className="white-block">
-                <label className="add-img" htmlFor="picture-input">
-                  <button className="btn-solid btn-large">
-                    Ajouter une image
-                  </button>
-                </label>
-                <input
-                  type="file"
-                  id="picture-input"
-                  onChange={(event) => {
-                    // console.log(event);
-                    setPicture(event.target.files[0]);
-                  }}
-                />
-                {picture && <img src={URL.createObjectURL(picture)} alt="" />}
+              <div className="white-block picture-input">
+                <div className="target-img ">
+                  {!picture ? (
+                    <>
+                      <label
+                        className="btn-light btn-large add-img"
+                        htmlFor="picture-input"
+                      >
+                        <i className="fa-solid fa-plus"></i> Ajouter une image
+                      </label>
+                      <input
+                        type="file"
+                        id="picture-input"
+                        onChange={(event) => {
+                          // console.log(event);
+                          setPicture(event.target.files[0]);
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <label
+                        className="btn-light btn-large add-img"
+                        htmlFor="picture-input"
+                      >
+                        <i className="fa-solid fa-repeat"></i> Changer l'image
+                      </label>
+                      <input
+                        type="file"
+                        id="picture-input"
+                        onChange={(event) => {
+                          // console.log(event);
+                          setPicture(event.target.files[0]);
+                        }}
+                      />
+                    </>
+                  )}
+
+                  {picture && (
+                    <>
+                      <div className="added-img">
+                        <img src={URL.createObjectURL(picture)} alt="" />
+                        <p>{picture.name}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
               <div className="white-block">
                 <div className="text-input">
@@ -176,29 +209,35 @@ const Publish = ({ token }) => {
               <div className="white-block">
                 <div className="text-input">
                   <p>Prix</p>
-                  <input
-                    type="text"
-                    name="price"
-                    placeholder="ex : Sézane"
-                    value={price}
-                    onChange={(event) => {
-                      setPrice(event.target.value);
-                    }}
-                  />
-                </div>
-                <div className="text-input">
-                  <input
-                    type="checkbox"
-                    name="exchange"
-                    value={exchange}
-                    onChange={() => {
-                      setExchange(!exchange);
-                    }}
-                  />
-                  <span>Je suis intéressé(e) par les échanges</span>
+                  <div className="price-input">
+                    <div>
+                      <input
+                        type="text"
+                        name="price"
+                        placeholder="0,00 €"
+                        value={price}
+                        onChange={(event) => {
+                          setPrice(event.target.value);
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="exchange"
+                        value={exchange}
+                        onChange={() => {
+                          setExchange(!exchange);
+                        }}
+                      />
+                      <span>Je suis intéressé(e) par les échanges</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <input type="submit" value="Ajouter" />
+              <div className="submit-block">
+                <input className="btn-solid" type="submit" value="Ajouter" />
+              </div>
             </form>
           </section>
         </div>

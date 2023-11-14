@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 // Je récupère la fonction handleToken en argument
-const Signup = ({ handleToken }) => {
+const Signup = ({ handleToken, tear }) => {
   // States qui gèrent mes inputs
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -55,9 +55,9 @@ const Signup = ({ handleToken }) => {
 
   return (
     <>
-      <main>
-        <div className="container">
-          <section className="signup-form">
+      <main className="main-white">
+        <div className="container signup-login-form">
+          <section>
             <h1>S'inscrire</h1>
             <form onSubmit={handleSubmit}>
               <div>
@@ -108,23 +108,29 @@ const Signup = ({ handleToken }) => {
                 <span>S'inscrire à notre newsletter</span>
               </div>
               <div>
-                <p>En m'inscrivant, blablabla</p>
+                <p>
+                  En m'inscrivant je confirme avoir lu et accepté les Termes &
+                  Conditions et Politique de Confidentialité de Vinted. Je
+                  confirme avoir au moins 18 ans.
+                </p>
               </div>
 
               <div>
                 <input
-                  className="submit-button"
+                  className="submit-button btn-solid btn-large"
                   type="submit"
                   value="S'inscrire"
                 ></input>
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
               </div>
             </form>
-            <span>Tu as déjà un compte ? </span>
-            <Link to="/login">Connecte-toi !</Link>
+            <p>
+              Tu as déjà un compte ? <Link to="/login">Connecte-toi !</Link>
+            </p>
           </section>
         </div>
       </main>
+      <img className="tear" src={tear} alt="" />
     </>
   );
 };

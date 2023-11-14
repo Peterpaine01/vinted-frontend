@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = ({ handleToken }) => {
+const Login = ({ handleToken, tear }) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -50,35 +50,44 @@ const Login = ({ handleToken }) => {
 
   return (
     <>
-      <main>
-        <div className="container">
-          <section className="signup-form">
-            <h1>S'inscrire</h1>
+      <main className="main-white">
+        <div className="container signup-login-form">
+          <section>
+            <h1>Se connecter</h1>
             <form onSubmit={handleSubmit}>
               <label htmlFor="email">
-                Email
                 <input
                   type="email"
+                  placeholder="Email"
                   name="email"
                   value={user.email}
                   onChange={handleChange}
                 />
               </label>
               <label htmlFor="password">
-                Password
                 <input
                   type="password"
                   name="password"
+                  placeholder="Mot de passe"
                   value={user.password}
                   onChange={handleChange}
                 />
               </label>
               {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <button type="submit">Login</button>
+              <button
+                type="submit"
+                className="submit-button btn-solid btn-large"
+              >
+                Se connecter
+              </button>
             </form>
+            <p>
+              Pas encore de compte ? <Link to="/signup">Inscris-toi !</Link>
+            </p>
           </section>
         </div>
       </main>
+      <img className="tear" src={tear} alt="" />
     </>
   );
 };

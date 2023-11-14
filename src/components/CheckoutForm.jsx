@@ -62,38 +62,45 @@ const CheckoutForm = ({ title, price, token, idUser }) => {
     </>
   ) : (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className="resume-order">
-          <p>
-            <span>Commande</span>
-            <span>{price} €</span>
-          </p>
-          <p>
-            <span>Frais protection acheteurs</span>
-            <span>1.00 €</span>
-          </p>
-          <p>
-            <span>Frais de port</span>
-            <span>2.00 €</span>
-          </p>
-        </div>
-        <div className="total-order">
-          <div>
-            <span>Total</span>
-            <span>{Number(price)} €</span>
-          </div>
-          <p>
-            Il ne vous reste plus qu'un étape pour vous offrir{" "}
-            <strong>{title}</strong>. Vous allez payer{" "}
-            <strong>{Number(price)}</strong> € (frais de protection et frais de
-            port inclus).
-          </p>
-        </div>
-        <h1>Résumé de la commande</h1>
+      <div className="container short">
+        <form onSubmit={handleSubmit}>
+          <div className="resume-order white-block">
+            <h1>Résumé de la commande</h1>
 
-        <CardElement />
-        <input type="submit" value="Payer" disabled={isLoading} />
-      </form>
+            <p>
+              <span>Commande</span>
+              <span>{price} €</span>
+            </p>
+            <p>
+              <span>Frais protection acheteurs</span>
+              <span>1.00 €</span>
+            </p>
+            <p>
+              <span>Frais de port</span>
+              <span>2.00 €</span>
+            </p>
+          </div>
+          <div className="total-order white-block">
+            <div className="total-price">
+              <span>Total</span>
+              <span>{Number(price)} €</span>
+            </div>
+            <p>
+              Il ne vous reste plus qu'un étape pour vous offrir{" "}
+              <strong>{title}</strong>. Vous allez payer{" "}
+              <strong>{Number(price)}</strong> € (frais de protection et frais
+              de port inclus).
+            </p>
+            <CardElement />
+            <input
+              type="submit"
+              value="Payer"
+              disabled={isLoading}
+              className="btn-solid btn-large"
+            />
+          </div>
+        </form>
+      </div>
     </>
   );
 };

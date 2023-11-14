@@ -49,6 +49,12 @@ const Home = ({ tear, search }) => {
             <img src={tear} alt="" />
           </div>
         </div>
+        <div className="promo-insert-mobile">
+          <h1>Prêts à faire du tri dans vos placards ?</h1>
+          <Link className="btn-solid btn-large" to={`/publish`}>
+            Vends maintenant
+          </Link>
+        </div>
         <div className="sections">
           <div className="container">
             <section>
@@ -69,8 +75,8 @@ const Home = ({ tear, search }) => {
             </section>
           </div>
         </div>
-        <img src={tear} alt="" />
       </main>
+      <img className="tear" src={tear} alt="" />
     </>
   );
 };

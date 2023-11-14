@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { redirect } from "react-router-dom";
 
 // images
 import logo from "./assets/img/vinted.png";
@@ -81,17 +82,18 @@ const App = () => {
         ...search,
         [event.target.name]: value,
       });
+
       // console.log(search);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       setSearch({
         ...search,
       });
+      redirect("/");
       // console.log(search);
     } catch (error) {
       console.log(error.response); // contrairement au error.message d'express
@@ -118,13 +120,23 @@ const App = () => {
         <Route
           path="/signup"
           element={
-            <Signup token={token} idUser={idUser} handleToken={handleToken} />
+            <Signup
+              token={token}
+              idUser={idUser}
+              handleToken={handleToken}
+              tear={tear}
+            />
           }
         />
         <Route
           path="/login"
           element={
-            <Login token={token} idUser={idUser} handleToken={handleToken} />
+            <Login
+              token={token}
+              idUser={idUser}
+              handleToken={handleToken}
+              tear={tear}
+            />
           }
         />
         <Route
