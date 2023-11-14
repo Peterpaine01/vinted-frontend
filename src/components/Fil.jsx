@@ -15,23 +15,30 @@ const Fil = ({ offer }) => {
   //   console.log(owner.account.avatar);
 
   return (
-    <Link className="product" to={`/offer/${_id}`}>
-      <article>
-        <div className="author">
-          {owner.account.avatar ? (
-            <img src={owner.account.avatar.secure_url} alt="" />
-          ) : null}
+    <article>
+      <div className="author">
+        {owner.account.avatar ? (
+          <img src={owner.account.avatar.secure_url} alt="" />
+        ) : (
+          <img
+            src="../src/assets/img/avatar-default.jpg"
+            alt="v du logo vinted"
+          />
+        )}
 
-          <p>{owner.account.username}</p>
-        </div>
+        <p>{owner.account.username}</p>
+      </div>
+      <Link className="product" to={`/offer/${_id}`}>
         <div className="product-preview">
           <img src={product_image.secure_url} alt="" />
         </div>
+      </Link>
+      <div className="product-description">
         <p className="price">{product_price} €</p>
         <p className="size">{product_details[1].TAILLE}</p>
         <p className="brand">{product_details[0].MARQUE}</p>
-      </article>
-    </Link>
+      </div>
+    </article>
   );
 };
 

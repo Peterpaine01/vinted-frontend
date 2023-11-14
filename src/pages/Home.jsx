@@ -24,19 +24,29 @@ const Home = ({ search }) => {
       }
     };
     fetchData();
+    document.body.className = "home";
+    return () => {
+      document.body.className = "";
+    };
   }, [search]);
 
   return isLoading ? (
     <span>En cours de chargement...</span>
   ) : (
     <>
-      <main>
+      <main className="main-white">
         <div className="slider">
           <div className="container">
             <div className="promo-insert">
               <h1>Prêts à faire du tri dans vos placards ?</h1>
-              <Link>Vends maintenant</Link>
+              <Link className="btn-solid btn-large" to={`/publish`}>
+                Vends maintenant
+              </Link>
             </div>
+            <img
+              src="../src/assets/img/tear.884480420945b3afd77b44a6c5f98567.svg"
+              alt=""
+            />
           </div>
         </div>
         <div className="sections">
@@ -52,6 +62,10 @@ const Home = ({ search }) => {
             </section>
           </div>
         </div>
+        <img
+          src="../src/assets/img/tear.884480420945b3afd77b44a6c5f98567.svg"
+          alt=""
+        />
       </main>
     </>
   );

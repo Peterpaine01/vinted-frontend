@@ -4,7 +4,14 @@ const Footer = () => {
   return (
     <>
       <footer>
-        <p>Footer ici</p>
+        <div className="container">
+          <p>
+            Made with React by{" "}
+            <a href="https://github.com/Peterpaine01?tab=repositories">
+              Fanny Carlier
+            </a>
+          </p>
+        </div>
       </footer>
     </>
   );

@@ -20,14 +20,16 @@ const Header = ({
         {/* ------- TOP MENU --------- */}
         <div className="top-menu">
           <div className="container">
-            <div className="logo">Logo</div>
+            <Link className="logo" to="/">
+              <img src="../src/assets/img/vinted.png" alt="" />
+            </Link>
 
             <div className="search-offer">
               <form onSubmit={handleSubmit}>
+                <i className="fa-solid fa-magnifying-glass"></i>
                 <input
                   type="text"
                   name="title"
-                  id=""
                   placeholder="Rechercher des articles"
                   onChange={handleChange}
                   value={search.title}
@@ -39,21 +41,28 @@ const Header = ({
 
               {token ? (
                 <button
+                  className="btn-red"
                   onClick={() => {
                     // Je me déconnecte en appelant la fonction handleToken et en lui donnant null en argument
                     handleToken(null);
                   }}
                 >
-                  se déconnecter
+                  Se déconnecter
                 </button>
               ) : (
                 <>
-                  <Link to={`/signup`}>s'inscrire</Link>
-                  <Link to={`/login`}>se connecter</Link>
+                  <Link className="btn-light" to={`/signup`}>
+                    S'inscrire
+                  </Link>
+                  <Link className="btn-light" to={`/login`}>
+                    Se connecter
+                  </Link>
                 </>
               )}
 
-              <Link to={`/publish`}>Vends tes articles</Link>
+              <Link className="btn-solid" to={`/publish`}>
+                Vends tes articles
+              </Link>
             </nav>
           </div>
         </div>
@@ -61,15 +70,17 @@ const Header = ({
         <div className="filter-menu">
           <div className="container">
             <div className="sort-filter">
-              <span>Trier par prix :</span>
-              <input
-                type="checkbox"
-                name="sort"
-                id=""
-                placeholder="Rechercher des articles"
-                onChange={handleChange}
-                value={search.sort}
-              />
+              <p>Trier par prix :</p>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  name="sort"
+                  placeholder="Rechercher des articles"
+                  onChange={handleChange}
+                  value={search.sort}
+                />
+                <span className="slider-switch round"></span>
+              </label>
             </div>
             <div className="range-filter">
               <span>Prix entre :</span>
@@ -102,11 +113,12 @@ const Header = ({
                         borderRadius: "4px",
                         background: getTrackBackground({
                           values,
-                          colors: ["#ccc", "#548BF4", "#ccc"],
+                          colors: ["#ededed", "#09b0ba", "#ededed"],
                           min: 0,
                           max: 500,
                         }),
                         alignSelf: "center",
+                        position: "relative",
                       }}
                     >
                       {children}
@@ -118,24 +130,27 @@ const Header = ({
                     {...props}
                     style={{
                       ...props.style,
-                      height: "42px",
-                      width: "42px",
-                      borderRadius: "4px",
-                      backgroundColor: "#FFF",
+                      height: "17px",
+                      width: "17px",
+                      borderRadius: "50%",
+                      backgroundColor: "#09b0ba",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      boxShadow: "0px 2px 6px #AAA",
                     }}
                   >
                     <div
+                      className="range-cursor"
                       style={{
-                        height: "16px",
-                        width: "5px",
-                        backgroundColor: isDragged ? "#548BF4" : "#CCC",
+                        padding: "3px",
+                        backgroundColor: "#09b0ba",
+                        textAlign: "center",
+                        position: "absolute",
+                        top: "-20px",
+                        borderRadius: "2px",
                       }}
                     >
-                      {values[index]}
+                      <p>{`${values[index]} €`}</p>
                     </div>
                   </div>
                 )}
