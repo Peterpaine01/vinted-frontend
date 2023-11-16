@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 
 // images
 import logo from "./assets/img/vinted.png";
@@ -32,13 +31,6 @@ const App = () => {
     Cookies.get("idUser") || null
     // Cookies.get("token") ? Cookies.get("token") : null
   );
-  const [search, setSearch] = useState({
-    sort: "",
-    priceRange: [0, 50],
-    title: "",
-  });
-
-  const navigate = useNavigate();
 
   // Cette fonction permet de stocker le token dans le state et dans les cookies ou supprimer le token dans le state et dans les cookies
   const handleToken = (token, idUser) => {
@@ -55,54 +47,11 @@ const App = () => {
     }
   };
 
-  const handleChangeRange = (values) => {
-    // console.log(values);
-    setSearch({
-      ...search,
-      priceRange: [values[0], values[1]],
-    });
-  };
-
-  const handleChange = (event) => {
-    if (event.target.name === "sort") {
-      if (search.sort === "price-asc" || search.sort === "") {
-        setSearch({
-          ...search,
-          [event.target.name]: "price-desc",
-        });
-        // console.log(search);
-      } else {
-        setSearch({
-          ...search,
-          [event.target.name]: "price-asc",
-        });
-        // console.log(search);
-      }
-    } else if (event && event.target.name === "title") {
-      const value = event.target.value;
-      setSearch({
-        ...search,
-        [event.target.name]: value,
-      });
-
-      // console.log(search);
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const value = event.target.value;
-    try {
-      setSearch({
-        ...search,
-        [event.target.name]: value,
-      });
-      navigate("/");
-      // console.log(search);
-    } catch (error) {
-      console.log(error.response); // contrairement au error.message d'express
-    }
-  };
+  const [search, setSearch] = useState({
+    sort: "",
+    priceRange: [0, 50],
+    title: "",
+  });
 
   return (
     <Router>
@@ -111,12 +60,8 @@ const App = () => {
         token={token}
         idUser={idUser}
         handleToken={handleToken}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
         search={search}
-        values={search.priceRange}
         setSearch={setSearch}
-        handleChangeRange={handleChangeRange}
       />
       <Routes>
         <Route path="/" element={<Home tear={tear} search={search} />} />

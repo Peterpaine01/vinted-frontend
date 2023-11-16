@@ -1,20 +1,57 @@
 import { Link } from "react-router-dom";
 import { Range, getTrackBackground } from "react-range";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 // Je récupère en props le state token et la fonction handleToken
-const Header = ({
-  logo,
-  token,
-  handleToken,
-  handleSubmit,
-  handleChange,
-  searchReq,
-  setSearchReq,
-  search,
-  values,
-  setSearch,
-  handleChangeRange,
-}) => {
+const Header = ({ logo, token, handleToken, search, setSearch }) => {
+  const navigate = useNavigate();
+
+  const [searchTitle, setSearchTitle] = useState("");
+
+  const values = search.priceRange;
+
+  const handleChangeRange = (values) => {
+    // console.log(values);
+    setSearch({
+      ...search,
+      priceRange: [values[0], values[1]],
+    });
+  };
+
+  const handleChange = (event) => {
+    if (event.target.name === "sort") {
+      if (search.sort === "price-asc" || search.sort === "") {
+        setSearch({
+          ...search,
+          [event.target.name]: "price-desc",
+        });
+        // console.log(search);
+      } else {
+        setSearch({
+          ...search,
+          [event.target.name]: "price-asc",
+        });
+        // console.log(search);
+      }
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      setSearch({
+        ...search,
+        title: searchTitle,
+      });
+      navigate("/");
+      setSearchTitle("");
+      console.log(search);
+    } catch (error) {
+      console.log(error.response); // contrairement au error.message d'express
+    }
+  };
+
   return (
     <>
       <header>
@@ -32,8 +69,10 @@ const Header = ({
                   type="text"
                   name="title"
                   placeholder="Rechercher des articles"
-                  onChange={handleChange}
-                  value={search.title}
+                  onChange={(event) => {
+                    setSearchTitle(event.target.value);
+                  }}
+                  value={searchTitle}
                 />
               </form>
             </div>
