@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Cookies from "js-cookie";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // images
 import logo from "./assets/img/vinted.png";
@@ -37,6 +37,8 @@ const App = () => {
     priceRange: [0, 50],
     title: "",
   });
+
+  const navigate = useNavigate();
 
   // Cette fonction permet de stocker le token dans le state et dans les cookies ou supprimer le token dans le state et dans les cookies
   const handleToken = (token, idUser) => {
@@ -89,11 +91,13 @@ const App = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const value = event.target.value;
     try {
       setSearch({
         ...search,
+        [event.target.name]: value,
       });
-      redirect("/");
+      navigate("/");
       // console.log(search);
     } catch (error) {
       console.log(error.response); // contrairement au error.message d'express
